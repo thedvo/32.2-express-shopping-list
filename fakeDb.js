@@ -3,10 +3,6 @@
 
 // Remember that since you are using an array for storage, this will be cleared each time the server restarts. Create a simple file called fakeDb.js which contains the following:
 
-global.items = [
-	{ name: 'Oreos', price: 3.99 },
-	{ name: 'Cocoa Puffs', price: 4.99 },
-	{ name: 'Cheez-Its', price: 3.99 },
-];
+global.items = [];
 
 module.exports = items;

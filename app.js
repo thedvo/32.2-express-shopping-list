@@ -1,14 +1,14 @@
 const express = require('express');
 const ExpressError = require('./expressError');
 const morgan = require('morgan');
-const shoppingRoutes = require('./shoppingRoutes');
+const itemRoutes = require('./routes/items');
 
 const app = express();
 
-app.use('/', shoppingRoutes);
 app.use(morgan('dev'));
-app.get('/favicon.ico', (req, res) => res.sendStatus(204));
-// responds with 204 "no content" if browser requests favicon
+app.get('/favicon.ico', (req, res) => res.sendStatus(204)); // responds with 204 "no content" if browser requests favicon
+app.use(express.json());
+app.use('/items', itemRoutes);
 
 // If no other route matches, respond with a 404
 app.use((req, res, next) => {
@@ -18,7 +18,6 @@ app.use((req, res, next) => {
 
 // Error handler
 app.use(function (err, req, res, next) {
-	//Note the 4 parameters!
 	// the default status is 500 Internal Server Error
 	let status = err.status || 500;
 	let message = err.msg;
@@ -27,6 +26,10 @@ app.use(function (err, req, res, next) {
 	return res.status(status).json({
 		error: { message, status },
 	});
+});
+
+app.listen(3000, function () {
+	console.log('Server starting on port 3000');
 });
 
 module.exports = app;
